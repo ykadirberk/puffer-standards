@@ -14,4 +14,7 @@ add_executable(puffer_standards test.cpp
         source/BasicAllocator.cpp
         source/String.cpp
         include/pufd/Utils/Cloneable.h
+        source/Array.cpp
+        include/pufd/Containers/Array.h
+        include/pufd/Utils/NumericalTypes.h
 )

@@ -5,13 +5,13 @@
 #ifndef ALLOCATOR_H
 #define ALLOCATOR_H
 
-#include <cstdint>
 #include <malloc.h>
 
 // internal dependencies
 #include "../Utils/Result.h"
 #include "../SmartPointers/Pointer.h"
 #include "../SmartPointers/SharedPointer.h"
+#include "../Utils/NumericalTypes.h"
 
 namespace pufd
 {
@@ -21,7 +21,7 @@ namespace pufd
             Allocator() = default;
             virtual ~Allocator() = default;
 
-            auto virtual allocate(size_t size) -> pufd::Result<pufd::Pointer<uint8_t>, const char*> = 0;
+            auto virtual allocate(size_t size) -> pufd::Result<pufd::Pointer<u8>, const char*> = 0;
     };
 }
 

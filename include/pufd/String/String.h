@@ -13,8 +13,6 @@
 
 namespace pufd
 {
-    // non copyable String class
-    // should call clone for copy operations
     class String : public Cloneable<pufd::String, const char*>
     {
         public:
@@ -48,14 +46,21 @@ namespace pufd
             size_t current_size;
             size_t reserved_size;
 
-        private: // helper functions
+            // helper functions
             static auto cstring_size(const char* str) -> size_t;
             static auto cstring_length(const char* str) -> size_t;
     };
     inline std::ostream& operator<<(std::ostream& os, const String& obj)
     {
-        os.write(static_cast<const char*>(&obj.data[0]), static_cast<std::streamsize>(obj.size()));
-        return os;
+        // if (nullptr != obj.data)
+        // {
+            os.write(static_cast<const char*>(&obj.data[0]), static_cast<std::streamsize>(obj.size()));
+            return os;
+        // }
+        // else
+        // {
+        //     throw std::runtime_error("String object is moved out of scope.");
+        // }
     }
 }
 

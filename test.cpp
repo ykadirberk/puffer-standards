@@ -4,13 +4,15 @@
 
 int main()
 {
-    pufd::String str = "LETSGO";
-    pufd::String newstring = str.clone().fast_result();
+    pufd::String str = "Hello, World!";
+    std::cout << "str :: " << str << std::endl;
 
-    std::cout << "Hello, World!" << std::endl;
-    std::cout << "MyString ::: " << newstring << std::endl;
-    std::cout << "Addresses : " << std::endl
-              << "str : " << &str << std::endl
-			  << "newstring : " << &newstring << std::endl;
+    pufd::String newstring = str.clone().fast_result();
+    std::cout << "newstring :: " << newstring << std::endl;
+
+    pufd::String moved = pufd::move(str);
+    std::cout << "moved :: " << moved << std::endl;
+    std::cout << "str(moved) :: " << str << std::endl;
+
     return 0;
 }

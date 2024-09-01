@@ -52,11 +52,19 @@ namespace pufd
 
             auto operator[](size_t index) -> Type&
             {
+                if (nullptr == data)
+                {
+                    throw std::runtime_error("NULLPTR exception");
+                }
                 return data[index];
             }
 
             auto operator[](size_t index) const -> const Type&
             {
+                if (nullptr == data)
+                {
+                    throw std::runtime_error("NULLPTR exception");
+                }
                 return data[index];
             }
 
@@ -68,6 +76,20 @@ namespace pufd
             auto operator->() -> Type&
             {
                 return *data;
+            }
+
+            auto operator==(Type* pointer) const noexcept -> bool
+            {
+                bool result = false;
+                if (data == pointer)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+                return result;
             }
 
             // returns the C pointer and takes its ownership.

@@ -6,6 +6,7 @@
 #define BASICALLOCATOR_H
 
 #include "Allocator.h"
+#include "../Utils/NumericalTypes.h"
 
 namespace pufd
 {
@@ -16,7 +17,7 @@ namespace pufd
 
             ~BasicAllocator() override = default;
 
-            auto allocate(size_t size) -> pufd::Result<Pointer<uint8_t>, const char*> override;
+            auto allocate(size_t size) -> pufd::Result<Pointer<u8>, const char*> override;
     } basic_allocator;
 }
 

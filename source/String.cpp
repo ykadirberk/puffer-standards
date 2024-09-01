@@ -2,6 +2,8 @@
 // Created by ykadi on 20.08.2024.
 //
 
+#include <iostream>
+
 #include "../include/pufd/String/String.h"
 namespace pufd
 {
@@ -27,10 +29,7 @@ namespace pufd
 			Pointer<char> pointer_char = (char*)(allocation.extract_pointer());
 			data = pufd::move(pointer_char);
 
-			for (int i = 0; i < size_of_str; i++)
-			{
-				data[i] = str[i];
-			}
+			memcpy( &this->data[0], str, size_of_str);
 			current_size = size_of_str;
 			reserved_size = size_of_str;
 		}
@@ -44,18 +43,21 @@ namespace pufd
 	String::String(pufd::String&& other) noexcept : allocator(other.allocator)
 	{
 		this->current_size = other.current_size;
-		this->data = pufd::move(other.data);
 		this->reserved_size = other.reserved_size;
-		other.data = nullptr;
+		this->data = pufd::move(other.data);
+		other.current_size = 0;
+		other.reserved_size = 0;
+		std::cout << (u64)(this) << "::" << *this << "::move_constructor\n";
 	}
 
 	auto String::operator=(pufd::String&& other) noexcept -> pufd::String& // move assignment
 	{
 		this->allocator = other.allocator;
 		this->current_size = other.current_size;
-		this->data = pufd::move(other.data);
 		this->reserved_size = other.reserved_size;
-		other.data = nullptr;
+		this->data = pufd::move(other.data);
+		other.current_size = 0;
+		other.reserved_size = 0;
 
 		return *this;
 	}
@@ -68,13 +70,14 @@ namespace pufd
 		if (true == allocation_result.is_successful())
 		{
 			auto allocation = allocation_result.extract_success();
-			Pointer<char> pointer_char = (char*)(allocation.extract_pointer());
+			Pointer<char> pointer_char = reinterpret_cast<char*>(allocation.extract_pointer());
 			temp.data = pufd::move(pointer_char);
 			memcpy(&temp.data[0], &this->data[0], this->size());
 
 			temp.current_size = this->current_size;
 			temp.reserved_size = this->reserved_size;
-		} else
+		}
+		else
 		{
 			return "Could not clone String: allocation error.";
 		}
