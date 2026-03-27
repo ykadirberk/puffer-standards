@@ -8,7 +8,7 @@ add_executable(puffer_standards test.cpp
         include/pufd/Allocators/Allocator.h
         include/pufd/Utils/Result.h
         include/pufd/String/String.h
-        include/pufd/SmartPointers/Pointer.h
+        
         include/pufd/SmartPointers/SharedPointer.h
         include/pufd/Utils/Move.h
         source/BasicAllocator.cpp

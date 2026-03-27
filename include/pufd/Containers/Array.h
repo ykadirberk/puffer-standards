@@ -7,7 +7,6 @@
 
 // internal dependencies
 #include "../Utils/NumericalTypes.h"
-#include "../Allocators/BasicAllocator.h"
 
 namespace pufd
 {
@@ -29,8 +28,6 @@ namespace pufd
 			}
 
 		private:
-			Pointer<Type> data;
-			Allocator& allocator;
 			u64 current_size;
 			u64 allocated_size;
 	};

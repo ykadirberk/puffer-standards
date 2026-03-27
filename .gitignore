@@ -1,5 +1,8 @@
 #folders
 /cmake-build-debug
+/out
+/.vs
+/.idea
 
 # Prerequisites
 *.d

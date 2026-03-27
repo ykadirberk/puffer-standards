@@ -7,18 +7,18 @@
 #include "../include/pufd/String/String.h"
 namespace pufd
 {
-	String::String(Allocator& allocator) : allocator(allocator)
+	string::string()
 	{
 		current_size = 0;
 		reserved_size = 0;
 	}
 
-	String::~String()
+	string::~string()
 	{
 			// destructor
 	}
 
-	String::String(const char* str) : allocator(basic_allocator)
+	string::string(const char* str) : allocator(basic_allocator)
 	{
 		size_t size_of_str = cstring_size(str);
 		auto allocation_result = allocator.allocate(size_of_str);
@@ -40,7 +40,7 @@ namespace pufd
 		}
 	}
 
-	String::String(pufd::String&& other) noexcept : allocator(other.allocator)
+	string::string(pufd::string&& other) noexcept : allocator(other.allocator)
 	{
 		this->current_size = other.current_size;
 		this->reserved_size = other.reserved_size;
@@ -50,7 +50,7 @@ namespace pufd
 		std::cout << (u64)(this) << "::" << *this << "::move_constructor\n";
 	}
 
-	auto String::operator=(pufd::String&& other) noexcept -> pufd::String& // move assignment
+	auto string::operator=(pufd::string&& other) noexcept -> pufd::string& // move assignment
 	{
 		this->allocator = other.allocator;
 		this->current_size = other.current_size;
@@ -62,9 +62,9 @@ namespace pufd
 		return *this;
 	}
 
-	auto String::clone() const -> Result<pufd::String, const char*>
+	auto string::clone() const -> pufd::string
 	{
-		String temp(this->allocator);
+		string temp(this->allocator);
 		auto allocation_result = allocator.allocate(this->size());
 
 		if (true == allocation_result.is_successful())
@@ -84,17 +84,17 @@ namespace pufd
 		return temp;
 	}
 
-	auto String::size() const noexcept -> size_t
+	auto string::size() const noexcept -> size_t
 	{
 		return current_size;
 	}
 
-	auto String::length() const noexcept -> size_t
+	auto string::length() const noexcept -> size_t
 	{
 		return current_size == 1 ? 0 : current_size - 1;
 	}
 
-	auto String::cstring_size(const char* str) -> size_t
+	auto string::cstring_size(const char* str) -> size_t
 	{
 		size_t size;
 		for (size_t i = 0; ; i++)
@@ -108,7 +108,7 @@ namespace pufd
 		return size;
 	}
 
-	auto String::cstring_length(const char* str) -> size_t
+	auto string::cstring_length(const char* str) -> size_t
 	{
 		const size_t size = cstring_size(str);
 		size_t result = 0;
